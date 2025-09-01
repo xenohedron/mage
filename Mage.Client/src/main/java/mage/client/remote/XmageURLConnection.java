@@ -150,13 +150,10 @@ public class XmageURLConnection {
             this.connection.setRequestProperty("Accept-Encoding", "gzip");
         }
 
-        this.connection.setRequestProperty("User-Agent", getDefaultUserAgent());
-    }
-
-    public static String getDefaultUserAgent() {
         // user agent due standard notation User-Agent: <product> / <product-version> <comment>
         // warning, dot not add os, language and other details
-        return String.format("XMage/%s build: %s", version.toString(false), version.getBuildTime());
+        this.connection.setRequestProperty("User-Agent", String.format("XMage/%s build: %s",
+                version.toString(false), version.getBuildTime()));
     }
 
     /**
