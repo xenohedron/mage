@@ -16,17 +16,17 @@ public class MageVersion implements Serializable, Comparable<MageVersion> {
     // * V1-beta3 is qualifier and compares as string
     // * launcher gives priority to 1.4.48 instead 1.4.48-any-text, so don't use empty release info
     public static final int MAGE_VERSION_MAJOR = 1;
-    public static final int MAGE_VERSION_MINOR = 4;
-    public static final int MAGE_VERSION_RELEASE = 58;
-    public static final String MAGE_VERSION_RELEASE_INFO = "V1"; // V1, V1a, V1b for releases; V1-beta3, V1-beta4 for betas
+    public static final int MAGE_VERSION_MINOR = 5;
+    public static final int MAGE_VERSION_RELEASE = 1;
+    public static final String MAGE_VERSION_RELEASE_INFO = "XDHS-r4"; // V1, V1a, V1b for releases; V1-beta3, V1-beta4 for betas
 
     // strict mode
     // Each update requires a strict version
     // If you disable it then server can accept multiple versions with same release number
     // Since incompatible changes are no longer monitored - it must always be true
-    private static final boolean MAGE_VERSION_RELEASE_INFO_MUST_BE_SAME = true;
+    private static final boolean MAGE_VERSION_RELEASE_INFO_MUST_BE_SAME = false;
     // build info
-    public static final boolean MAGE_VERSION_SHOW_BUILD_TIME = true;
+    public static final boolean MAGE_VERSION_SHOW_BUILD_TIME = false;
 
     private final int major;
     private final int minor;
@@ -43,12 +43,6 @@ public class MageVersion implements Serializable, Comparable<MageVersion> {
         this.minor = minor;
         this.release = release;
         this.releaseInfo = releaseInfo;
-
-        if (!releaseInfo.startsWith("V")) {
-            // release: V1
-            // beta: V1-beta3
-            throw new IllegalArgumentException("ERROR, release info must be started from V.");
-        }
 
         // build time
         this.buildTime = JarVersion.getBuildTime(sourceClass);
