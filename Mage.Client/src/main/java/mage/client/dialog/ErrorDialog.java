@@ -70,7 +70,7 @@ public class ErrorDialog extends MageDialog {
                 CardUtil.urlEncode(title),
                 CardUtil.urlEncode(body)
         );
-        AppUtil.openUrlInSystemBrowser(url);
+        AppUtil.openUrlInBrowser(url);
     }
 
     /**
