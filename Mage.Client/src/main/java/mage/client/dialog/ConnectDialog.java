@@ -13,7 +13,6 @@ import mage.utils.StreamUtils;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.*;
@@ -191,7 +190,7 @@ public class ConnectDialog extends MageDialog {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(4, 0), new java.awt.Dimension(5, 32767));
         btnFlagSearch = new javax.swing.JButton();
         panelFast = new javax.swing.JPanel();
-        btnFindMain = new javax.swing.JButton();
+        btnfindXDHS = new javax.swing.JButton();
         btnFindLocal = new javax.swing.JButton();
         btnFindBeta = new javax.swing.JButton();
         btnFindUs = new javax.swing.JButton();
@@ -276,7 +275,7 @@ public class ConnectDialog extends MageDialog {
         });
 
         lblFastConnect.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFastConnect.setLabelFor(btnFindMain);
+        lblFastConnect.setLabelFor(btnfindXDHS);
         lblFastConnect.setText("Connect to:");
         lblFastConnect.setName(""); // NOI18N
 
@@ -302,18 +301,18 @@ public class ConnectDialog extends MageDialog {
         });
         panelFlag.add(btnFlagSearch);
 
-        btnFindMain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/flags/de.png"))); // NOI18N
-        btnFindMain.setText("X");
-        btnFindMain.setToolTipText("Connect to xmage.de (first Europe server, most popular, registration needs)");
-        btnFindMain.setAlignmentY(0.0F);
-        btnFindMain.setEnabled(false);
-        btnFindMain.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        btnFindMain.setMaximumSize(new java.awt.Dimension(42, 23));
-        btnFindMain.setMinimumSize(new java.awt.Dimension(42, 23));
-        btnFindMain.setPreferredSize(new java.awt.Dimension(23, 23));
-        btnFindMain.addActionListener(new java.awt.event.ActionListener() {
+        //btnfindXDHS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/flags/de.png"))); // NOI18N
+        btnfindXDHS.setText("XDHS");
+        btnfindXDHS.setToolTipText("Connect to mage.xdhs.net");
+        btnfindXDHS.setAlignmentY(0.0F);
+        btnfindXDHS.setEnabled(true);
+        btnfindXDHS.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        btnfindXDHS.setMaximumSize(new java.awt.Dimension(42, 23));
+        btnfindXDHS.setMinimumSize(new java.awt.Dimension(42, 23));
+        btnfindXDHS.setPreferredSize(new java.awt.Dimension(23, 23));
+        btnfindXDHS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFindMainActionPerformed(evt);
+                btnFindXDHSActionPerformed(evt);
             }
         });
 
@@ -332,6 +331,7 @@ public class ConnectDialog extends MageDialog {
         btnFindBeta.setText("BETA");
         btnFindBeta.setToolTipText("Connect to BETA server, AI disabled (use any username without registration)");
         btnFindBeta.setAlignmentY(0.0F);
+        btnFindBeta.setEnabled(false);
         btnFindBeta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnFindBeta.setMargin(new java.awt.Insets(2, 2, 2, 2));
         btnFindBeta.setPreferredSize(new java.awt.Dimension(23, 23));
@@ -385,7 +385,7 @@ public class ConnectDialog extends MageDialog {
             panelFastLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelFastLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(btnFindMain, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnfindXDHS, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFindEU, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -403,7 +403,7 @@ public class ConnectDialog extends MageDialog {
             .addGroup(panelFastLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(panelFastLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnFindMain, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnfindXDHS, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFindLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFindUs, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFindBeta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -769,8 +769,8 @@ public class ConnectDialog extends MageDialog {
         MageFrame.showWhatsNewDialog();
     }//GEN-LAST:event_btnWhatsNewActionPerformed
 
-    private void btnFindMainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindMainActionPerformed
-        setServerSettings("xmage.de", "17171", true);
+    private void btnFindXDHSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindMainActionPerformed
+        setServerSettings("mage.xdhs.net", "17171", false);
     }//GEN-LAST:event_btnFindMainActionPerformed
 
     private void btnFindEUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindEUActionPerformed
@@ -844,7 +844,7 @@ public class ConnectDialog extends MageDialog {
     private javax.swing.JButton btnFindBeta;
     private javax.swing.JButton btnFindEU;
     private javax.swing.JButton btnFindLocal;
-    private javax.swing.JButton btnFindMain;
+    private javax.swing.JButton btnfindXDHS;
     private javax.swing.JButton btnFindOther;
     private javax.swing.JButton btnFindUs;
     private javax.swing.JButton btnFlagSearch;
