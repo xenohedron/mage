@@ -2,6 +2,7 @@ package mage.abilities.keyword;
 
 import mage.abilities.SpecialAction;
 import mage.abilities.costs.mana.GenericManaCost;
+import mage.abilities.effects.common.SkipNextDrawStepControllerEffect;
 import mage.abilities.effects.keyword.CompanionEffect;
 import mage.cards.Card;
 import mage.constants.TimingRule;
@@ -23,8 +24,9 @@ public class CompanionAbility extends SpecialAction {
     public CompanionAbility(CompanionCondition companionCondition) {
         super(Zone.OUTSIDE);
         this.companionCondition = companionCondition;
-        this.addCost(new GenericManaCost(3));
+        this.addCost(new GenericManaCost(0));
         this.addEffect(new CompanionEffect());
+        this.addEffect(new SkipNextDrawStepControllerEffect());
         this.setTiming(TimingRule.SORCERY);
     }
 
