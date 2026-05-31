@@ -33,7 +33,7 @@ public final class MemoryLeak extends CardImpl {
         this.getSpellAbility().addTarget(new TargetOpponent());
 
         // Cycling {1}
-        this.addAbility(new CyclingAbility(new ManaCostsImpl<>("{1}")));
+        this.addAbility(new CyclingAbility(new ManaCostsImpl<>("{2/B}")));
     }
 
     private MemoryLeak(final MemoryLeak card) {

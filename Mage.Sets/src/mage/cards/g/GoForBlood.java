@@ -29,7 +29,7 @@ public final class GoForBlood extends CardImpl {
         this.getSpellAbility().addTarget(new TargetPermanent(FILTER_CREATURE_YOU_DONT_CONTROL));
 
         // Cycling {1}
-        this.addAbility(new CyclingAbility(new ManaCostsImpl<>("{1}")));
+        this.addAbility(new CyclingAbility(new ManaCostsImpl<>("{2/R}")));
     }
 
     private GoForBlood(final GoForBlood card) {
