@@ -401,4 +401,89 @@ public class DisturbTest extends CardTestPlayerBase {
         setStopAt(1, PhaseStep.END_TURN);
         execute();
     }
+
+    /**
+     * Relevant rule:
+     *      712.8a While a double-faced card is outside the game or in a zone other than the battlefield or stack,
+     *      it has only the characteristics of its front face.
+     * <p>
+     * So the back face's "exile it instead" must not apply to the card in a library or hand.
+     */
+    @Test
+    public void test_Milled_GoesToGraveyard() {
+        // Disturb {1}{U}
+        // Hook-Haunt Drifter: If Hook-Haunt Drifter would be put into a graveyard from anywhere, exile it instead.
+        addCard(Zone.LIBRARY, playerA, "Baithook Angler");
+        addCard(Zone.LIBRARY, playerA, "Island");
+        skipInitShuffling();
+        // Target player mills two cards. Draw a card.
+        addCard(Zone.HAND, playerA, "Thought Scour"); // {U}
+        addCard(Zone.BATTLEFIELD, playerA, "Island", 1);
+
+        castSpell(1, PhaseStep.PRECOMBAT_MAIN, playerA, "Thought Scour", playerA);
+
+        setStrictChooseMode(true);
+        setStopAt(1, PhaseStep.END_TURN);
+        execute();
+
+        assertGraveyardCount(playerA, "Baithook Angler", 1);
+        assertExileCount(playerA, 0);
+    }
+
+    @Test
+    public void test_Discarded_GoesToGraveyard_ThenAuraIsExiled() {
+        // Disturb {2}{W}
+        // Twinblade Invocation: Enchant creature. Enchanted creature has double strike.
+        // If Twinblade Invocation would be put into a graveyard from anywhere, exile it instead.
+        addCard(Zone.HAND, playerA, "Twinblade Geist"); // {1}{W}
+        // As an additional cost to cast this spell, discard a card. Draw two cards.
+        addCard(Zone.HAND, playerA, "Tormenting Voice"); // {1}{R}
+        addCard(Zone.HAND, playerA, "Lightning Bolt"); // {R}
+        addCard(Zone.BATTLEFIELD, playerA, "Plateau", 6);
+        addCard(Zone.BATTLEFIELD, playerA, "Grizzly Bears");
+
+        castSpell(1, PhaseStep.PRECOMBAT_MAIN, playerA, "Tormenting Voice", true);
+        setChoice(playerA, "Twinblade Geist"); // discard cost
+        checkGraveyardCount("discarded", 1, PhaseStep.PRECOMBAT_MAIN, playerA, "Twinblade Geist", 1);
+        checkExileCount("discarded", 1, PhaseStep.PRECOMBAT_MAIN, playerA, "Twinblade Geist", 0);
+
+        activateAbility(1, PhaseStep.PRECOMBAT_MAIN, playerA, "Cast Twinblade Invocation using Disturb");
+        addTarget(playerA, "Grizzly Bears");
+        waitStackResolved(1, PhaseStep.PRECOMBAT_MAIN);
+        checkPermanentCount("disturbed", 1, PhaseStep.PRECOMBAT_MAIN, playerA, "Twinblade Invocation", 1);
+
+        castSpell(1, PhaseStep.PRECOMBAT_MAIN, playerA, "Lightning Bolt", "Grizzly Bears");
+
+        setStrictChooseMode(true);
+        setStopAt(1, PhaseStep.END_TURN);
+        execute();
+
+        assertGraveyardCount(playerA, "Twinblade Geist", 0);
+        assertExileCount(playerA, "Twinblade Geist", 1);
+    }
+
+    @Test
+    public void test_FrontFaceDies_GoesToGraveyard_ThenDisturbedDies_IsExiled() {
+        // Disturb {1}{U}
+        // Hook-Haunt Drifter: If Hook-Haunt Drifter would be put into a graveyard from anywhere, exile it instead.
+        addCard(Zone.HAND, playerA, "Baithook Angler"); // {1}{U}
+        addCard(Zone.HAND, playerA, "Lightning Bolt", 2); // {R}
+        addCard(Zone.BATTLEFIELD, playerA, "Volcanic Island", 6);
+
+        castSpell(1, PhaseStep.PRECOMBAT_MAIN, playerA, "Baithook Angler", true);
+        castSpell(1, PhaseStep.PRECOMBAT_MAIN, playerA, "Lightning Bolt", "Baithook Angler", true);
+        checkGraveyardCount("front face died", 1, PhaseStep.PRECOMBAT_MAIN, playerA, "Baithook Angler", 1);
+        checkExileCount("front face died", 1, PhaseStep.PRECOMBAT_MAIN, playerA, "Baithook Angler", 0);
+
+        activateAbility(1, PhaseStep.PRECOMBAT_MAIN, playerA, "Cast Hook-Haunt Drifter using Disturb");
+        waitStackResolved(1, PhaseStep.PRECOMBAT_MAIN);
+        castSpell(1, PhaseStep.PRECOMBAT_MAIN, playerA, "Lightning Bolt", "Hook-Haunt Drifter");
+
+        setStrictChooseMode(true);
+        setStopAt(1, PhaseStep.END_TURN);
+        execute();
+
+        assertGraveyardCount(playerA, "Baithook Angler", 0);
+        assertExileCount(playerA, "Baithook Angler", 1);
+    }
 }
