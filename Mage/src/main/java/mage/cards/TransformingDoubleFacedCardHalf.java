@@ -61,4 +61,19 @@ public class TransformingDoubleFacedCardHalf extends DoubleFacedCardHalf {
 
         return all;
     }
+
+    @Override
+    public boolean hasAbility(Ability ability, Game game) {
+        // 712.8a While a double-faced card is outside the game or in a zone other than the battlefield or stack,
+        // it has only the characteristics of its front face.
+        // The back half shares the main card's zone there, so without this its abilities (e.g. disturb's
+        // "exile it instead") would work from the library or hand.
+        if (isBackSide()) {
+            Zone zone = game.getState().getZone(getId());
+            if (zone != Zone.STACK && zone != Zone.BATTLEFIELD) {
+                return false;
+            }
+        }
+        return super.hasAbility(ability, game);
+    }
 }
